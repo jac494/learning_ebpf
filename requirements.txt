@@ -1,0 +1,4 @@
+bcc==0.1.10
+numpy==1.24.3
+traitlets==5.9.0
+traittypes==0.2.1
