@@ -2,3 +2,13 @@ bcc==0.1.10
 numpy==1.24.3
 traitlets==5.9.0
 traittypes==0.2.1
+bcc==0.1.10
+black==23.7.0
+click==8.1.4
+mypy-extensions==1.0.0
+numpy==1.24.3
+packaging==23.1
+pathspec==0.11.1
+platformdirs==3.8.1
+traitlets==5.9.0
+traittypes==0.2.1
