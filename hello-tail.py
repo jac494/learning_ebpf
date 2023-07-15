@@ -2,7 +2,7 @@
 
 from bcc import BPF, ct
 
-program = r"""BPF_PROG_ARRAY(syscall, 300);
+program = r"""BPF_PROG_ARRAY(syscall, 350);
 
 int hello(struct bpf_raw_tracepoint_args *ctx) {
     int opcode = ctx->args[1];
@@ -48,7 +48,7 @@ prog_array[ct.c_int(225)] = ct.c_int(timer_fn.fd)
 prog_array[ct.c_int(226)] = ct.c_int(timer_fn.fd)
 
 # Ignore some syscalls that come up a lot
-for ignore_call_int in [0, 1, 14, 21, 22, 25, 28, 47, 202, 232, 270]:
+for ignore_call_int in [0, 1, 4, 14, 16, 21, 22, 25, 28, 47, 89, 102, 202, 232, 254, 262, 270, 318]:
     prog_array[ct.c_int(ignore_call_int)] = ct.c_int(ignore_fn.fd)
 
 b.trace_print()
