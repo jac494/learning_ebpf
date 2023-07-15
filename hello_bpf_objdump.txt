@@ -8,7 +8,7 @@
 
 hello.bpf.o:	file format elf64-bpf
 
-Disassembly of section .text:
+Disassembly of section xdp:
 
 0000000000000000 <hello>:
 ;   bpf_printk("Hello world %d", counter);

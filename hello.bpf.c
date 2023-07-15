@@ -4,7 +4,7 @@
 
 int counter = 0;
 
-SEC("xdp");
+SEC("xdp")
 int hello(void *ctx) {
   bpf_printk("Hello world %d", counter);
   counter++;
