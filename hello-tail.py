@@ -2,6 +2,29 @@
 
 from bcc import BPF, ct
 
+# Good reference here for syscalls by opcode
+# https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
+IGNORE_SYSCALLS_MAP = {
+    0: "read",
+    1: "write",
+    4: "stat",
+    14: "rt_sigprocmask",
+    16: "ioctl",
+    21: "access",
+    22: "pipe",
+    25: "mremap",
+    28: "madvise",
+    47: "recvmsg",
+    89: "readlink",
+    102: "getuid",
+    202: "futex",
+    232: "epoll_wait",
+    254: "inotify_add_watch",
+    262: "newfstatat",
+    270: "pselect6",
+    318: "getrandom",
+}
+
 program = r"""BPF_PROG_ARRAY(syscall, 350);
 
 int hello(struct bpf_raw_tracepoint_args *ctx) {
@@ -48,7 +71,7 @@ prog_array[ct.c_int(225)] = ct.c_int(timer_fn.fd)
 prog_array[ct.c_int(226)] = ct.c_int(timer_fn.fd)
 
 # Ignore some syscalls that come up a lot
-for ignore_call_int in [0, 1, 4, 14, 16, 21, 22, 25, 28, 47, 89, 102, 202, 232, 254, 262, 270, 318]:
-    prog_array[ct.c_int(ignore_call_int)] = ct.c_int(ignore_fn.fd)
+for ignore_call_opcode in IGNORE_SYSCALLS_MAP.keys():
+    prog_array[ct.c_int(ignore_call_opcode)] = ct.c_int(ignore_fn.fd)
 
 b.trace_print()
